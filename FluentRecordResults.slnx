@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="FluentRecordResults.Extensions.AspNetCore/FluentRecordResults.Extensions.AspNetCore.csproj" />
   <Project Path="FluentRecordResults/FluentRecordResults.csproj" />
 </Solution>
