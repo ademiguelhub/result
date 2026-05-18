@@ -13,6 +13,10 @@ public enum Error
     InvalidInput,
     /// <summary>Requested resource not found.</summary>
     NotFound,
+    /// <summary>Operation was cancelled by the caller.</summary>
+    Cancelled,
+    /// <summary>Operation timed out before completing.</summary>
+    Timeout,
     /// <summary>Database related exception occurred.</summary>
     DbException,
     /// <summary>Error during serialization or deserialization.</summary>

@@ -23,6 +23,8 @@ public static class ResultGetExtensions
             {
                 Error.InvalidInput => new ArgumentException(result.Reason ?? "Invalid input."),
                 Error.NotFound => new KeyNotFoundException(result.Reason ?? "Resource not found."),
+                Error.Cancelled => new OperationCanceledException(result.Reason ?? "The operation was cancelled."),
+                Error.Timeout => new TimeoutException(result.Reason ?? "The operation timed out."),
                 Error.DbException => new InvalidOperationException(result.Reason ?? "Database exception occurred."),
                 Error.SerializationError => new SerializationException(result.Reason ?? "Error during serialization or deserialization."),
                 _ => new ApplicationException(result.Reason ?? "An error occurred.")

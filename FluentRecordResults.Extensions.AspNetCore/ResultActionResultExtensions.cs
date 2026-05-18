@@ -16,9 +16,25 @@ public static class ResultActionResultExtensions
         /// <returns>An <see cref="ObjectResult"/> with the Result as body and the chosen HTTP status code.</returns>
         public IActionResult ToActionResult(int? statusCode = null)
         {
-            statusCode ??= GetStatusCode(result);
+            statusCode ??= result.HttpStatusCode;
             return new ObjectResult(result) { StatusCode = statusCode };
         }
+
+        /// <summary>
+        /// Map a <see cref="Result"/> to an HTTP status code based on its <see cref="Error"/>.
+        /// Successful results map to 200; unmapped failure codes fall through to 500.
+        /// </summary>
+        private int HttpStatusCode => result switch
+        {
+            { IsSuccess: true } => StatusCodes.Status200OK,
+            { Code: Error.InvalidInput } => StatusCodes.Status400BadRequest,
+            { Code: Error.NotFound } => StatusCodes.Status404NotFound,
+            { Code: Error.Cancelled } => StatusCodes.Status503ServiceUnavailable,
+            { Code: Error.Timeout } => StatusCodes.Status504GatewayTimeout,
+            { Code: Error.DbException } => StatusCodes.Status500InternalServerError,
+            { Code: Error.SerializationError } => StatusCodes.Status500InternalServerError,
+            _ => StatusCodes.Status500InternalServerError
+        };
     }
 
     extension<T>(Result<T> result)
@@ -31,22 +47,8 @@ public static class ResultActionResultExtensions
         /// <returns>An <see cref="ObjectResult"/> with the Result as body and the chosen HTTP status code.</returns>
         public IActionResult ToActionResult(int? statusCode = null)
         {
-            statusCode ??= GetStatusCode(result);
+            statusCode ??= result.HttpStatusCode;
             return new ObjectResult(result) { StatusCode = statusCode };
         }
     }
-
-    /// <summary>
-    /// Map a <see cref="Result"/> to an HTTP status code based on its <see cref="Error"/>.
-    /// Successful results map to 200; unmapped failure codes fall through to 500.
-    /// </summary>
-    private static int GetStatusCode(Result result) => result switch
-    {
-        { IsSuccess: true } => StatusCodes.Status200OK,
-        { Code: Error.InvalidInput } => StatusCodes.Status400BadRequest,
-        { Code: Error.NotFound } => StatusCodes.Status404NotFound,
-        { Code: Error.DbException } => StatusCodes.Status500InternalServerError,
-        { Code: Error.SerializationError } => StatusCodes.Status500InternalServerError,
-        _ => StatusCodes.Status500InternalServerError
-    };
 }
