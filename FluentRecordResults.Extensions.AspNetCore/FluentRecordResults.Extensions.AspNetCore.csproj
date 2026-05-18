@@ -12,7 +12,7 @@
 
     <PropertyGroup>
         <PackageId>FluentRecordResults.Extensions.AspNetCore</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.2.0</Version>
         <Authors>Andrés de Miguel</Authors>
         <Description>Extensions for converting FluentRecordResults to ASP.NET Core action results and other ASP.NET Core integrations.</Description>
         <PackageTags>result;result-pattern;fluent;railway-oriented;functional;aspnetcore</PackageTags>

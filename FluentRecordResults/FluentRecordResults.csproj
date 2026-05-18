@@ -9,7 +9,7 @@
 
     <PropertyGroup>
         <PackageId>FluentRecordResults</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.2.0</Version>
         <Authors>Andrés de Miguel</Authors>
         <Description>Fluent Result and Result&lt;T&gt; record types with Bind/Select/Match/GetOrThrow chain operations.</Description>
         <PackageTags>result;result-pattern;fluent;railway-oriented;functional</PackageTags>
